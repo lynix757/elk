@@ -15,7 +15,9 @@ services:
     networks:
       - elk
     deploy:
-      mode: global
+      #mode: global
+      mode: replicated
+      replicas: 1
     labels:
       org.label-schema.group: "ELK"
 
