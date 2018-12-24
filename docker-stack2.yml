@@ -12,12 +12,13 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-    restart: unless-stopped
     networks:
       - elk
     deploy:
       mode: replicated
       replicas: 1
+    labels:
+      org.label-schema.group: "ELK"
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.5.4
@@ -31,12 +32,13 @@ services:
         target: /usr/share/logstash/pipeline/logstash.conf
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    restart: unless-stopped
     networks:
       - elk
     deploy:
       mode: replicated
       replicas: 1
+    labels:
+      org.label-schema.group: "ELK"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.5.4
@@ -45,12 +47,13 @@ services:
     configs:
       - source: kibana_config
         target: /usr/share/kibana/config/kibana.yml
-    restart: unless-stopped
     networks:
       - elk
     deploy:
       mode: replicated
       replicas: 1
+    labels:
+      org.label-schema.group: "ELK"
 
 configs:
 
