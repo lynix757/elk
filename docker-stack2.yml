@@ -12,6 +12,14 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      cluster.name=docker-cluster
+      bootstrap.memory_lock=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
     networks:
       - elk
     deploy:
@@ -70,3 +78,7 @@ configs:
 networks:
   elk:
     driver: overlay
+    
+volumes:
+  esdata:
+    driver: local
